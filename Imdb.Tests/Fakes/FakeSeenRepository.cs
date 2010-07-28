@@ -6,8 +6,10 @@ using Imdb.Models;
 
 namespace Imdb.Tests.Fakes
 {
-    class FakeSeenRepository: ISeenRepository
+    public class FakeSeenRepository: ISeenRepository
     {
+        public List<int> SeenMovies;
+
         public void Add(Seen seen)
         {
             throw new NotImplementedException();
@@ -25,7 +27,7 @@ namespace Imdb.Tests.Fakes
 
         public IQueryable<int> GetSeenMoviesByUser(string user)
         {
-            throw new NotImplementedException();
+            return SeenMovies.AsQueryable();
         }
 
         public IQueryable<string> GetUsersWhoHaveSeenMovie(int id)

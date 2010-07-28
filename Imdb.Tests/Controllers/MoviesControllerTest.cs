@@ -27,10 +27,7 @@ namespace Imdb.Tests.Controllers
             seenRepository = new FakeSeenRepository();
             controller = new MoviesController(movieRepository, seenRepository);
 
-            var mock = new Mock<ControllerContext>();
-            mock.SetupGet(p => p.HttpContext.User.Identity.IsAuthenticated).Returns(false);
-
-            controller.ControllerContext = mock.Object;
+            MockUserAuthentication(false);
         }
 
         [TestMethod]
@@ -38,7 +35,7 @@ namespace Imdb.Tests.Controllers
         {
             var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
 
-            Assert.AreEqual(20, viewModel.PaginatedMovies.Count());
+            viewModel.PaginatedMovies.Count().ShouldEqual(20);
         }
 
         [TestMethod]
@@ -46,6 +43,25 @@ namespace Imdb.Tests.Controllers
         {
             var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();            
             viewModel.PageSizeOptions.ShouldContain(new int[] {10, 20, 50, 100, 250});
+        }
+
+        [TestMethod]
+        public void Logged_In_Users_See_Which_Movies_Are_Seen()
+        {
+            MockUserAuthentication(true);
+            seenRepository.SeenMovies = new List<int> { 1, 2, 3 };            
+            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+
+            viewModel.SeenMovies.ShouldContain(new int[] { 1, 2, 3 });
+        }
+
+
+
+        private void MockUserAuthentication(bool authenticated)
+        {
+            var mock = new Mock<ControllerContext>();
+            mock.SetupGet(p => p.HttpContext.User.Identity.IsAuthenticated).Returns(authenticated);
+            controller.ControllerContext = mock.Object;
         }
     }
     
@@ -59,6 +75,11 @@ namespace Imdb.Tests.Controllers
 
     public static class TestExtensions
     {
+        public static void ShouldEqual(this object objA, object objB)
+        {
+            Assert.AreEqual(objB, objA);
+        }
+
         public static void ShouldBeTrue(this bool check)
         {
             Assert.IsTrue(check);

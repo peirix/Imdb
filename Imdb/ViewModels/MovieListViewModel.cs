@@ -11,6 +11,7 @@ namespace Imdb.ViewModels
     {
         public PaginatedList<Movie> PaginatedMovies { get; set; }
         public List<int> PageSizeOptions { get; set; }
+        public List<int> SeenMovies { get; set; }
 
         public MovieListViewModel()
         {

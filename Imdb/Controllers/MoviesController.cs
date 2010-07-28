@@ -37,15 +37,13 @@ namespace Imdb.Controllers
             var movies = _movieRepository.AllMovies();
             var paginatedMovies = new PaginatedList<Movie>(movies, page ?? 0, pageSize ?? 20);
 
-            var viewmodel = new MovieListViewModel
-            {
-                PaginatedMovies = paginatedMovies
-            };
+            var viewmodel = new MovieListViewModel();
+            viewmodel.PaginatedMovies = paginatedMovies;
 
             if (User.Identity.IsAuthenticated)
             {
                 var seenMovies = _seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
-                ViewData["seenMovies"] = seenMovies;
+                viewmodel.SeenMovies = seenMovies;
             }            
             
             return View(viewmodel);
