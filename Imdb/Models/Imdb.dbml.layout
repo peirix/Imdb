@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Imdb">
+  <DataContextMoniker Name="/ImdbDataContext" />
+  <nestedChildShapes>
+    <classShape Id="db9930eb-f8e0-42fb-9bb9-656fff511329" absoluteBounds="3.5, 1.375, 2, 1.3862939453125003">
+      <DataClassMoniker Name="/ImdbDataContext/Seen" />
+      <nestedChildShapes>
+        <elementListCompartment Id="426c8bc1-958b-4ece-985e-83c6a9fdcd89" absoluteBounds="3.515, 1.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2bb53cb2-7bbf-4071-8532-1a5b7c15b4a9" absoluteBounds="0.75, 0.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ImdbDataContext/Movie" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f88b2aef-d701-42f4-92fd-383d0208d072" absoluteBounds="0.765, 1.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 2.06814697265625); (3.5 : 2.06814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ImdbDataContext/Movie/Movie_Seen" />
+      <nodes>
+        <classShapeMoniker Id="2bb53cb2-7bbf-4071-8532-1a5b7c15b4a9" />
+        <classShapeMoniker Id="db9930eb-f8e0-42fb-9bb9-656fff511329" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="25d5f47f-20d1-4baa-b370-4f4af80ce4f5" absoluteBounds="3.5, 3.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ImdbDataContext/MovieLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0d3a8246-0746-4f25-8f03-ba50a87bb50d" absoluteBounds="3.5149999999999997, 3.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.75 : 3.03049967447917); (1.75 : 3.91429768880208); (3.5 : 3.91429768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/ImdbDataContext/Movie/Movie_MovieLog" />
+      <nodes>
+        <classShapeMoniker Id="2bb53cb2-7bbf-4071-8532-1a5b7c15b4a9" />
+        <classShapeMoniker Id="25d5f47f-20d1-4baa-b370-4f4af80ce4f5" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5785b08e-c396-4c5c-91ee-b4d4b514df67" absoluteBounds="3.5, 6, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/ImdbDataContext/BadgeList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0dcfb587-ed22-4564-b4f7-0122c62833ca" absoluteBounds="3.515, 6.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="38295992-8e04-4156-ad5b-7e3029a974df" absoluteBounds="0.75, 5.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ImdbDataContext/Badge" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5dc558e6-50c4-4063-9c4a-207be86b4eb8" absoluteBounds="0.765, 6.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 6.69314697265625); (3.5 : 6.69314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ImdbDataContext/Badge/Badge_BadgeList" />
+      <nodes>
+        <classShapeMoniker Id="38295992-8e04-4156-ad5b-7e3029a974df" />
+        <classShapeMoniker Id="5785b08e-c396-4c5c-91ee-b4d4b514df67" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

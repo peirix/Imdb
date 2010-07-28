@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Imdb" Class="ImdbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\Imdb.mdf;Integrated Security=True;User Instance=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ImdbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Seen" Member="Seens">
+    <Type Name="Seen">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Movie_Seen" Member="Movie" ThisKey="MovieID" OtherKey="ID" Type="Movie" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Movie" Member="Movies">
+    <Type Name="Movie">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="ReleaseYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Rank" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Rating" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Link" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Votes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Movie_Seen" Member="Seens" ThisKey="ID" OtherKey="MovieID" Type="Seen" />
+      <Association Name="Movie_MovieLog" Member="MovieLogs" ThisKey="ID" OtherKey="MovieID" Type="MovieLog" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MovieLog" Member="MovieLogs">
+    <Type Name="MovieLog">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LoggedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Rank" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Movie_MovieLog" Member="Movie" ThisKey="MovieID" OtherKey="ID" Type="Movie" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BadgeList" Member="BadgeLists">
+    <Type Name="BadgeList">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BadgeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Badge_BadgeList" Member="Badge" ThisKey="BadgeID" OtherKey="ID" Type="Badge" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Badge" Member="Badges">
+    <Type Name="Badge">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Badge_BadgeList" Member="BadgeLists" ThisKey="ID" OtherKey="BadgeID" Type="BadgeList" />
+    </Type>
+  </Table>
+</Database>
