@@ -6,7 +6,7 @@ using Imdb.Models;
 
 namespace Imdb.Models
 {
-    public class SeenRepository
+    public class SeenRepository : ISeenRepository
     {
         ImdbDataContext db = new ImdbDataContext();
 

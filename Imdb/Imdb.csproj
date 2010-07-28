@@ -87,9 +87,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Imdb.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\IMovieRepository.cs" />
+    <Compile Include="Models\ISeenRepository.cs" />
     <Compile Include="Models\MovieRepository.cs" />
     <Compile Include="Models\SeenRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MovieListViewModel.cs" />
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

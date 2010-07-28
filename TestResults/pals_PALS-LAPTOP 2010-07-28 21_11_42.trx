@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="53643860-d1bc-4988-a561-05f308e0e558" name="pals@PALS-LAPTOP 2010-07-28 21:11:42" runUser="BENNETT\pals" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="3b7d6d25-b83d-4b94-9d60-2d5f71160ccb">
+    <Deployment runDeploymentRoot="pals_PALS-LAPTOP 2010-07-28 21_11_42">
+      <DeploymentItem filename="C:\Code\Imdb\Imdb\bin\Imdb.dll" />
+      <DeploymentItem filename="C:\Code\Imdb\lib\moq\Moq.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-07-28T21:11:42.0514632+02:00" queuing="2010-07-28T21:11:42.3694814+02:00" start="2010-07-28T21:11:42.4304849+02:00" finish="2010-07-28T21:11:43.4385425+02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Displays_20_Movies_On_Load" storage="c:\code\imdb\imdb.tests\bin\debug\imdb.tests.dll" id="c5de44cd-b19a-c7da-af57-39fe5b01537f">
+      <Execution id="b6a7cd56-35fc-4ba9-a3db-c825ab03ebad" />
+      <TestMethod codeBase="C:/Code/Imdb/Imdb.Tests/bin/Debug/Imdb.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Imdb.Tests.Controllers.MoviesControllerTest, Imdb.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Displays_20_Movies_On_Load" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="c5de44cd-b19a-c7da-af57-39fe5b01537f" executionId="b6a7cd56-35fc-4ba9-a3db-c825ab03ebad" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="b6a7cd56-35fc-4ba9-a3db-c825ab03ebad" testId="c5de44cd-b19a-c7da-af57-39fe5b01537f" testName="Displays_20_Movies_On_Load" computerName="PALS-LAPTOP" duration="00:00:00.6402640" startTime="2010-07-28T21:11:42.4574864+02:00" endTime="2010-07-28T21:11:43.3715387+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b6a7cd56-35fc-4ba9-a3db-c825ab03ebad">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method Imdb.Tests.Controllers.MoviesControllerTest.Displays_20_Movies_On_Load threw exception: 
+System.NullReferenceException: Object reference not set to an instance of an object.</Message>
+          <StackTrace>    at Imdb.Controllers.MoviesController.Index(Nullable`1 page, Nullable`1 pageSize) in C:\Code\Imdb\Imdb\Controllers\MoviesController.cs:line 45
+   at Imdb.Tests.Controllers.MoviesControllerTest.Displays_20_Movies_On_Load() in C:\Code\Imdb\Imdb.Tests\Controllers\MoviesControllerTest.cs:line 37
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

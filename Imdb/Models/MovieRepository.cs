@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Imdb.Models
 {
-    public class MovieRepository
+    public class MovieRepository : IMovieRepository
     {
         ImdbDataContext db = new ImdbDataContext();
 

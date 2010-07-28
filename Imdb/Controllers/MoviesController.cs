@@ -8,24 +8,43 @@ using Imdb.Helpers;
 using HtmlAgilityPack;
 using System.Net;
 using System.IO;
+using Imdb.ViewModels;
 
 namespace Imdb.Controllers
 {
     public class MoviesController : Controller
     {
-        MovieRepository movieRepository = new MovieRepository();
-        SeenRepository seenRepository = new SeenRepository();
+        private readonly IMovieRepository _movieRepository;
+        private readonly ISeenRepository _seenRepository;
+        
+        public MoviesController()
+        {
+            _movieRepository = new MovieRepository();
+            _seenRepository = new SeenRepository();
+        }
+
+        public MoviesController(IMovieRepository movieRepository, ISeenRepository seenRepository)
+        {
+            _seenRepository = seenRepository;
+            _movieRepository = movieRepository;
+        }
+
         //
         // GET: /Movie/
 
         public ActionResult Index(int? page, int? pageSize)
         {
-            var movies = movieRepository.AllMovies();
+            var movies = _movieRepository.AllMovies();
             var paginatedMovies = new PaginatedList<Movie>(movies, page ?? 0, pageSize ?? 20);
+
+            var viewmodel = new MovieListViewModel
+            {
+                PaginatedMovies = paginatedMovies
+            };
 
             if (User.Identity.IsAuthenticated)
             {
-                var seenMovies = seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
+                var seenMovies = _seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
                 ViewData["seenMovies"] = seenMovies;
             }
 
@@ -36,13 +55,14 @@ namespace Imdb.Controllers
             pageSizeOptions.Add(100);
             pageSizeOptions.Add(250);
             ViewData["pageSizeOptions"] = pageSizeOptions;
-
-            return View(paginatedMovies);
+            
+            
+            return View(viewmodel);
         }
 
         public ActionResult Details(int id)
         {
-            Movie movie = movieRepository.GetMovie(id);
+            Movie movie = _movieRepository.GetMovie(id);
 
             /* Getting the poster image (not working)
             string url = "http://www.imdb.com/title/" + movie.Link;
@@ -67,20 +87,20 @@ namespace Imdb.Controllers
             ViewData["poster"] = poster;
             */
 
-            ViewData["users"] = seenRepository.GetUsersWhoHaveSeenMovie(movie.ID).ToList();
+            ViewData["users"] = _seenRepository.GetUsersWhoHaveSeenMovie(movie.ID).ToList();
 
-            ViewData["rankLog"] = movieRepository.GetMovieRankLog(id).ToList();
+            ViewData["rankLog"] = _movieRepository.GetMovieRankLog(id).ToList();
  
             return View(movie);
         }
 
         public ActionResult Search(string query)
         {
-            var movies = movieRepository.SearchMovie(query).ToList();
+            var movies = _movieRepository.SearchMovie(query).ToList();
 
             if (User.Identity.IsAuthenticated)
             {
-                var seenMovies = seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
+                var seenMovies = _seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
                 ViewData["seenMovies"] = seenMovies;
             }
 
