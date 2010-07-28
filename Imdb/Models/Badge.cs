@@ -15,7 +15,6 @@ namespace Imdb.Models
     {
         GOLD,
         SILVER,
-        BRONZE,
-        PREMIUM
+        BRONZE
     }
 }

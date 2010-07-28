@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Imdb.Models;
+using Imdb.ViewModels;
 using System.Web.Security;
 
 namespace Imdb.Controllers
@@ -25,10 +26,13 @@ namespace Imdb.Controllers
             List<Movie> movies = movieRepository.GetMoviesByUser(username).ToList();
             List<Badge> badges = badgeRepository.GetUserBadges(username).ToList();
 
-            ViewData["username"] = username;
-            ViewData["badges"] = badges;
+            var viewmodel = new UserIndexViewModel
+            {
+                Movies = movies,
+                Badges = badges
+            };
 
-            ViewData["seenMovies"] = seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
+            ViewData["username"] = username;
 
             return View(movies);
         }
