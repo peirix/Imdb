@@ -46,16 +46,7 @@ namespace Imdb.Controllers
             {
                 var seenMovies = _seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
                 ViewData["seenMovies"] = seenMovies;
-            }
-
-            List<int> pageSizeOptions = new List<int>();
-            pageSizeOptions.Add(10);
-            pageSizeOptions.Add(20);
-            pageSizeOptions.Add(50);
-            pageSizeOptions.Add(100);
-            pageSizeOptions.Add(250);
-            ViewData["pageSizeOptions"] = pageSizeOptions;
-            
+            }            
             
             return View(viewmodel);
         }

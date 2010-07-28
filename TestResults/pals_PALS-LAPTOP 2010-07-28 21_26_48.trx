@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="241c12c0-e4a6-4879-85ff-da39c39e75a5" name="pals@PALS-LAPTOP 2010-07-28 21:26:48" runUser="BENNETT\pals" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="8c331b14-7870-4938-9614-7d3f7b2ddcb3">
+    <Deployment runDeploymentRoot="pals_PALS-LAPTOP 2010-07-28 21_26_48">
+      <DeploymentItem filename="C:\Code\Imdb\Imdb\bin\Imdb.dll" />
+      <DeploymentItem filename="C:\Code\Imdb\lib\moq\Moq.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-07-28T21:26:48.3092982+02:00" queuing="2010-07-28T21:26:48.4603068+02:00" start="2010-07-28T21:26:48.4833081+02:00" finish="2010-07-28T21:26:49.2023492+02:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Can_Choose_Paging_Options" storage="c:\code\imdb\imdb.tests\bin\debug\imdb.tests.dll" id="2ec4f2e6-192b-fd53-a4c9-49986b4caebd">
+      <Execution id="57c5bd85-ce02-47ec-8fb4-ac916f7d8896" />
+      <TestMethod codeBase="C:/Code/Imdb/Imdb.Tests/bin/Debug/Imdb.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Imdb.Tests.Controllers.MoviesControllerTest, Imdb.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Can_Choose_Paging_Options" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="2ec4f2e6-192b-fd53-a4c9-49986b4caebd" executionId="57c5bd85-ce02-47ec-8fb4-ac916f7d8896" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="57c5bd85-ce02-47ec-8fb4-ac916f7d8896" testId="2ec4f2e6-192b-fd53-a4c9-49986b4caebd" testName="Can_Choose_Paging_Options" computerName="PALS-LAPTOP" duration="00:00:00.3848464" startTime="2010-07-28T21:26:48.4843082+02:00" endTime="2010-07-28T21:26:49.1583467+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="57c5bd85-ce02-47ec-8fb4-ac916f7d8896">
+    </UnitTestResult>
+  </Results>
+</TestRun>

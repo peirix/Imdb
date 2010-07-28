@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Imdb.ViewModels;
 using Imdb.Tests.Fakes;
 using Moq;
+using System.Collections;
 
 namespace Imdb.Tests.Controllers
 {
@@ -39,13 +40,45 @@ namespace Imdb.Tests.Controllers
 
             Assert.AreEqual(20, viewModel.PaginatedMovies.Count());
         }
-    }
 
+        [TestMethod]
+        public void Can_Choose_Paging_Options()
+        {
+            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();            
+            viewModel.PageSizeOptions.ShouldContain(new int[] {10, 20, 50, 100, 250});
+        }
+    }
+    
     public static class ActionResultExtensions
     {
         public static T GetViewModel<T>(this ActionResult ar)
         {
             return (T)((ViewResult)ar).ViewData.Model;
+        }
+    }
+
+    public static class TestExtensions
+    {
+        public static void ShouldBeTrue(this bool check)
+        {
+            Assert.IsTrue(check);
+        }
+
+        public static void ShouldContain(this IList collection, object item)
+        {
+            int index = collection.IndexOf(item);
+            if (index == -1)
+                Assert.Fail("Could not find expected object in list");
+        }
+
+        public static void ShouldContain(this IList collection, IEnumerable items)
+        {
+            foreach(var item in items)
+            {
+                int index = collection.IndexOf(item);
+                if (index == -1)
+                    Assert.Fail("Could not find expected object in list\r\n" + item.ToString());
+            }
         }
     }
 }
