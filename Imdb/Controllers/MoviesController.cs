@@ -34,10 +34,11 @@ namespace Imdb.Controllers
 
         public ActionResult Index(int? page, int? pageSize)
         {
+            var viewmodel = new MovieListViewModel();
+
             var movies = _movieRepository.AllMovies();
             var paginatedMovies = new PaginatedList<Movie>(movies, page ?? 0, pageSize ?? 20);
-
-            var viewmodel = new MovieListViewModel();
+            
             viewmodel.PaginatedMovies = paginatedMovies;
 
             if (User.Identity.IsAuthenticated)

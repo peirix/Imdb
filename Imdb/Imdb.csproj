@@ -103,6 +103,8 @@
     <Content Include="Global.asax" />
     <Content Include="Views\Movies\Details.aspx" />
     <Content Include="Views\Movies\Index.aspx" />
+    <Content Include="Views\Populate\Log.aspx" />
+    <Content Include="Views\Populate\ShowList.aspx" />
     <Content Include="Views\Shared\MovieListing.ascx" />
     <Content Include="Views\Movies\Search.aspx" />
     <Content Include="Views\Populate\Index.aspx" />

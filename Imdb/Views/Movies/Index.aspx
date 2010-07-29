@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Imdb.Helpers.PaginatedList<Imdb.Models.Movie>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Imdb.ViewModels.MovieListViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Movies
@@ -9,22 +9,23 @@
     <form method="get" action="/Movies/Search">
         <input name="query" type="text" /><input type="submit" />
     </form>
-    <% Html.RenderPartial("MovieListing"); %>
-
-    <% if (Model.HasPrevPage)
+    <%  ViewData["seenMovies"] = Model.SeenMovies;
+        Html.RenderPartial("MovieListing", Model.PaginatedMovies); %>
+    
+    <% if (Model.PaginatedMovies.HasPrevPage)
        { %>
-          <%= Html.RouteLink("Previous page", "AllMovies", new { page = (Model.PageIndex-1) }) %>
+          <%= Html.RouteLink("Previous page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex - 1) })%>
     <% } %>
 
-    <% if (Model.HasNextPage)
+    <% if (Model.PaginatedMovies.HasNextPage)
        { %>
-          <%= Html.RouteLink("Next page", "AllMovies", new { page = (Model.PageIndex+1) }) %>
+          <%= Html.RouteLink("Next page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex + 1) })%>
     <% } %>
 
     <select onchange="location.href = '?pageSize=' + this.value">
-        <% foreach (var option in ViewData["pageSizeOptions"] as List<int>)
+        <% foreach (var option in Model.PageSizeOptions)
            { %>
-            <option value="<%= option %>" <% if(Model.PageSize == option) { %> selected="selected" <% } %>><%= option %></option>
+            <option value="<%= option %>" <% if(Model.PaginatedMovies.PageSize == option) { %> selected="selected" <% } %>><%= option %></option>
            <% } %>
     </select>
 

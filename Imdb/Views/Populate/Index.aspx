@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Populated</h2>
-    <a href="/Populate/PopulateData">Populate database</a><br /><br />
+    <a href="/Populate/Log">Log movie list</a><br /><br />
     <a href="/Populate/Temp">Fix</a>
 
 </asp:Content>

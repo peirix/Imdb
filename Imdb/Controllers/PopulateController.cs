@@ -12,6 +12,9 @@ namespace Imdb.Controllers
 {
     public class PopulateController : Controller
     {
+        MovieRepository movieRep = new MovieRepository();
+
+
         //
         // GET: /Populate
 
@@ -22,7 +25,6 @@ namespace Imdb.Controllers
 
         public ActionResult Temp()
         {
-            MovieRepository movieRep = new MovieRepository();
             int i = 1;
             for (i = 1; i < 251; i++)
             {
@@ -35,16 +37,41 @@ namespace Imdb.Controllers
         }
 
         //
+        // GET: /Populate/ShowList
+        public ActionResult ShowList()
+        {
+            var movies = GetTop250Table();
+
+            return View(movies);
+        }
+
+        //
         // GET: /Populate/Log
 
         public ActionResult Log()
         {
-            // Scrape
-            // Få alle filmer
-            // For hver film, hent ut fra Movies ved sammenligning på link
-            // Finn plassering.
-            // Sett inn gamle plassering i MovieLog
-            // Oppdater plassering i Movies
+            var oldMovies = movieRep.AllMovies();
+            var newMovies = GetTop250Table();
+            foreach (var movie in newMovies)
+            {
+                var oldMovie = oldMovies.SingleOrDefault(m => m.Link == movie.Link);
+                if (oldMovie == null)
+                {
+                    //This movie is new to the list
+                    movieRep.Add(movie);
+                }
+                else
+                {
+                    //Log the old rank for the movie
+                    movieRep.LogMovie(oldMovie);
+                    //Update with new info
+                    oldMovie.Rank = movie.Rank;
+                    oldMovie.Rating = movie.Rating;
+                    oldMovie.Votes = movie.Votes;
+                    //Save the db
+                    movieRep.Save();
+                }
+            }
             return View();
         }
 
@@ -52,6 +79,22 @@ namespace Imdb.Controllers
         // GET: /Populate/PopulateData
 
         public ActionResult PopulateData()
+        {
+            var movies = GetTop250Table();
+
+            foreach (var movie in movies)
+            {
+                movieRep.Add(movie);
+                movieRep.Save();
+            }
+
+
+            return View();
+        }
+
+
+
+        private List<Movie> GetTop250Table()
         {
             string url = "http://www.imdb.com/chart/top";
             string strResult = "";
@@ -73,40 +116,47 @@ namespace Imdb.Controllers
             HtmlNode table = ContentHtml.DocumentNode.SelectSingleNode("//table");
             table.RemoveChild(table.SelectSingleNode("tr[1]"));
 
-            MovieRepository movieRep = new MovieRepository();
+            List<Movie> movies = new List<Movie>();
 
             foreach (HtmlNode row in table.SelectNodes("//tr"))
             {
-                int rank = Convert.ToInt16(row.SelectSingleNode("td[1]").InnerText.Substring(0, 1));
+                try
+                {
+                    string rankStr = row.SelectSingleNode("td[1]").InnerText;
+                    rankStr = rankStr.Substring(0, rankStr.Length - 1);
+                    int rank = Convert.ToInt16(rankStr);
 
-                int tempRating = Convert.ToInt16(row.SelectSingleNode("td[2]").InnerText.Replace(".", ""));
-                double rating = tempRating/10;
+                    int tempRating = Convert.ToInt16(row.SelectSingleNode("td[2]").InnerText.Replace(".", ""));
+                    double rating = (double)tempRating / 10;
 
-                string link = row.SelectSingleNode("descendant::a").GetAttributeValue("href", "#").ToString();
-                link = link.Substring(7, 9);
+                    string link = row.SelectSingleNode("descendant::a").GetAttributeValue("href", "#").ToString();
+                    link = link.Substring(7, 9);
 
-                string name = row.SelectSingleNode("td[3]").InnerText;
-                int year = Convert.ToInt16(name.Substring(name.IndexOf("(") + 1, 4));
+                    string name = row.SelectSingleNode("td[3]").InnerText;
+                    int year = Convert.ToInt16(name.Substring(name.IndexOf("(") + 1, 4));
+
+                    name = name.Substring(0, name.IndexOf(" ("));
+
+                    int votes = Convert.ToInt32(row.SelectSingleNode("td[4]").InnerText.Replace(",", ""));
+
+                    movies.Add(new Movie
+                    {
+                        Rank = rank,
+                        Rating = rating,
+                        Link = link,
+                        Name = name,
+                        ReleaseYear = year,
+                        Votes = votes
+                    });
+                }
+                catch
+                {
+                    //hmmm...
+                }
                 
-                name = name.Substring(0, name.IndexOf(" ("));
-
-                int votes = Convert.ToInt32(row.SelectSingleNode("td[4]").InnerText.Replace(",", ""));
-
-                Movie movie = new Movie
-                                {
-                                    Rank = rank,
-                                    Rating = rating,
-                                    Link = link,
-                                    Name = name,
-                                    ReleaseYear = year,
-                                    Votes = votes
-                                };
-                movieRep.Add(movie);
-                movieRep.Save();
             }
 
-
-            return View();
+            return movies;
         }
 
     }

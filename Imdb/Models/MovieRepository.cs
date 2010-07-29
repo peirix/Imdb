@@ -12,7 +12,7 @@ namespace Imdb.Models
         //Query methods
         public IQueryable<Movie> AllMovies()
         {
-            return db.Movies;
+            return db.Movies.OrderBy(m => m.Rank);
         }
 
         public Movie GetMovie(int id)
@@ -48,6 +48,18 @@ namespace Imdb.Models
         public void Add(Movie movie)
         {
             db.Movies.InsertOnSubmit(movie);
+        }
+
+        public void LogMovie(Movie movie)
+        {
+            var movieLog = new MovieLog
+            {
+                MovieID = movie.ID,
+                Rank = movie.Rank,
+                LoggedDate = DateTime.Now
+            };
+
+            db.MovieLogs.InsertOnSubmit(movieLog);
         }
 
         //Persist
