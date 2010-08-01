@@ -22,17 +22,19 @@ namespace Imdb.Tests.Fakes
 
         public Movie GetMovie(int id)
         {
-            throw new NotImplementedException();
+            return new Movie { ID = id };
         }
 
         public IQueryable<int> GetMovieRankLog(int id)
         {
-            throw new NotImplementedException();
+            List<int> rankLog = new List<int> { 2, 4, 5 };
+            return rankLog.AsQueryable();
         }
 
         public IQueryable<Movie> GetMoviesByUser(string user)
         {
-            throw new NotImplementedException();
+            List<Movie> movies = MovieBuilder.Create(100).WithRatingsBetween(1, 9);
+            return movies.AsQueryable();
         }
 
         public void Save()

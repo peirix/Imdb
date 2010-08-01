@@ -9,7 +9,7 @@
     <%  foreach (var movie in Model)
         {
             bool seenIt = false;
-            if (ViewData.ContainsKey("seenMovies"))
+            if (Context.User.Identity.IsAuthenticated && ViewData.ContainsKey("seenMovies"))
             {
                 List<int> seenMovies = ViewData["seenMovies"] as List<int>;
                 if (seenMovies.Contains(movie.ID))

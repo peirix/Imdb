@@ -7,19 +7,19 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2 id="feedback">&nbsp;</h2>
     <form method="get" action="/Movies/Search">
-        <input name="query" type="text" /><input type="submit" />
+        <input name="query" type="text" /><input type="submit" value="search" />
     </form>
     <%  ViewData["seenMovies"] = Model.SeenMovies;
         Html.RenderPartial("MovieListing", Model.PaginatedMovies); %>
     
     <% if (Model.PaginatedMovies.HasPrevPage)
        { %>
-          <%= Html.RouteLink("Previous page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex - 1) })%>
+          <%= Html.RouteLink("Previous page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex - 1), pageSize = Model.PaginatedMovies.PageSize })%>
     <% } %>
 
     <% if (Model.PaginatedMovies.HasNextPage)
        { %>
-          <%= Html.RouteLink("Next page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex + 1) })%>
+          <%= Html.RouteLink("Next page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex + 1), pageSize = Model.PaginatedMovies.PageSize })%>
     <% } %>
 
     <select onchange="location.href = '?pageSize=' + this.value">

@@ -11,9 +11,23 @@ namespace Imdb.Controllers
 {
     public class UserController : Controller
     {
-        MovieRepository movieRepository = new MovieRepository();
-        BadgeRepository badgeRepository = new BadgeRepository();
-        SeenRepository seenRepository = new SeenRepository();
+        IMovieRepository _movieRepository;
+        IBadgeRepository _badgeRepository;
+        ISeenRepository _seenRepository;
+
+        public UserController()
+        {
+            _movieRepository = new MovieRepository();
+            _badgeRepository = new BadgeRepository();
+            _seenRepository = new SeenRepository();
+        }
+
+        public UserController(IMovieRepository movieRepository, ISeenRepository seenRepository, IBadgeRepository badgeRepository)
+        {
+            _movieRepository = movieRepository;
+            _seenRepository = seenRepository;
+            _badgeRepository = badgeRepository;
+        }
 
         //
         // GET: /User/
@@ -23,25 +37,24 @@ namespace Imdb.Controllers
         public ActionResult Index(string user)
         {
             string username = user ?? User.Identity.Name;
-            List<Movie> movies = movieRepository.GetMoviesByUser(username).ToList();
-            List<Badge> badges = badgeRepository.GetUserBadges(username).ToList();
+            List<Movie> movies = _movieRepository.GetMoviesByUser(username).ToList();
+            List<Badge> badges = _badgeRepository.GetUserBadges(username).ToList();
 
             var viewmodel = new UserIndexViewModel
             {
                 Movies = movies,
-                Badges = badges
+                Badges = badges,
+                Username = username
             };
 
-            ViewData["username"] = username;
-
-            return View(movies);
+            return View(viewmodel);
         }
 
         [Authorize]
         public ActionResult Compare(string id)
         {
-            List<Movie> myMovies = movieRepository.GetMoviesByUser(User.Identity.Name).ToList();
-            List<Movie> otherSeen = movieRepository.GetMoviesByUser(id).ToList();
+            List<Movie> myMovies = _movieRepository.GetMoviesByUser(User.Identity.Name).ToList();
+            List<Movie> otherSeen = _movieRepository.GetMoviesByUser(id).ToList();
 
             List<Movie> bothSeen = new List<Movie>();
             List<Movie> mySeen = new List<Movie>();

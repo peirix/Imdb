@@ -10,5 +10,6 @@ namespace Imdb.ViewModels
     {
         public List<Badge> Badges { get; set; }
         public List<Movie> Movies { get; set; }
+        public string Username { get; set; }
     }
 }

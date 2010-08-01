@@ -77,11 +77,14 @@ namespace Imdb.Controllers
             ViewData["poster"] = poster;
             */
 
-            ViewData["users"] = _seenRepository.GetUsersWhoHaveSeenMovie(movie.ID).ToList();
-
-            ViewData["rankLog"] = _movieRepository.GetMovieRankLog(id).ToList();
+            var viewmodel = new MovieDetailsViewModel
+            {
+                Movie = movie,
+                SeenBy = _seenRepository.GetUsersWhoHaveSeenMovie(id).ToList(),
+                RankLog = _movieRepository.GetMovieRankLog(id).ToList()
+            };
  
-            return View(movie);
+            return View(viewmodel);
         }
 
         public ActionResult Search(string query)

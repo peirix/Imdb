@@ -59,8 +59,12 @@
   <ItemGroup>
     <Compile Include="Builders\MovieBuilder.cs" />
     <Compile Include="Controllers\MoviesControllerTest.cs" />
+    <Compile Include="Controllers\UserControllerTest.cs" />
+    <Compile Include="Fakes\FakeBadgeRepository.cs" />
     <Compile Include="Fakes\FakeMovieRepository.cs" />
     <Compile Include="Fakes\FakeSeenRepository.cs" />
+    <Compile Include="Helpers\ActionResultExtensions.cs" />
+    <Compile Include="Helpers\TestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\AccountControllerTest.cs" />

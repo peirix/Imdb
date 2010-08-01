@@ -6,7 +6,7 @@ using Imdb.Models;
 
 namespace Imdb.Models
 {
-    public class BadgeRepository
+    public class BadgeRepository : IBadgeRepository
     {
         ImdbDataContext db = new ImdbDataContext();
 

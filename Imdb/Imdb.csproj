@@ -82,6 +82,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\BadgeRepository.cs" />
+    <Compile Include="Models\IBadgeRepository.cs" />
     <Compile Include="Models\Imdb.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +93,7 @@
     <Compile Include="Models\MovieRepository.cs" />
     <Compile Include="Models\SeenRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModels\MovieListViewModel.cs" />
     <Compile Include="ViewModels\UserIndexViewModel.cs" />
   </ItemGroup>

@@ -10,6 +10,7 @@ using Imdb.ViewModels;
 using Imdb.Tests.Fakes;
 using Moq;
 using System.Collections;
+using Imdb.Tests.Helpers;
 
 namespace Imdb.Tests.Controllers
 {
@@ -55,6 +56,44 @@ namespace Imdb.Tests.Controllers
             viewModel.SeenMovies.ShouldContain(new int[] { 1, 2, 3 });
         }
 
+        [TestMethod]
+        public void User_Can_Mark_Movie_As_Seen()
+        {
+            MockUserAuthentication(true);
+            seenRepository.SeenMovies = new List<int> { 1, 2, 3 };
+            seenRepository.Add(new Seen { MovieID = 4 });
+
+            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+
+            viewModel.SeenMovies.Count().ShouldEqual(4);
+        }
+
+        [TestMethod]
+        public void User_Can_Mark_Movie_As_Not_Seen()
+        {
+            MockUserAuthentication(true);
+            seenRepository.SeenMovies = new List<int> { 1, 2, 3, 4 };
+            seenRepository.Delete(new Seen { ID = 4 });
+
+            var viewmodel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+
+            viewmodel.SeenMovies.Count().ShouldEqual(3);
+        }
+
+        [TestMethod]
+        public void Details_View_Shows_Information_On_One_Movie()
+        {
+            var viewModel = controller.Details(1).GetViewModel<MovieDetailsViewModel>();
+
+            viewModel.Movie.ID.ShouldEqual(1);
+        }
+
+        [TestMethod]
+        public void Details_View_Should_Contain_List_Of_Users_Whove_Seen_The_Movie()
+        {
+            var viewModel = controller.Details(1).GetViewModel<MovieDetailsViewModel>();
+            viewModel.SeenBy.Count().ShouldEqual(2);
+        }
 
 
         private void MockUserAuthentication(bool authenticated)
@@ -62,44 +101,6 @@ namespace Imdb.Tests.Controllers
             var mock = new Mock<ControllerContext>();
             mock.SetupGet(p => p.HttpContext.User.Identity.IsAuthenticated).Returns(authenticated);
             controller.ControllerContext = mock.Object;
-        }
-    }
-    
-    public static class ActionResultExtensions
-    {
-        public static T GetViewModel<T>(this ActionResult ar)
-        {
-            return (T)((ViewResult)ar).ViewData.Model;
-        }
-    }
-
-    public static class TestExtensions
-    {
-        public static void ShouldEqual(this object objA, object objB)
-        {
-            Assert.AreEqual(objB, objA);
-        }
-
-        public static void ShouldBeTrue(this bool check)
-        {
-            Assert.IsTrue(check);
-        }
-
-        public static void ShouldContain(this IList collection, object item)
-        {
-            int index = collection.IndexOf(item);
-            if (index == -1)
-                Assert.Fail("Could not find expected object in list");
-        }
-
-        public static void ShouldContain(this IList collection, IEnumerable items)
-        {
-            foreach(var item in items)
-            {
-                int index = collection.IndexOf(item);
-                if (index == -1)
-                    Assert.Fail("Could not find expected object in list\r\n" + item.ToString());
-            }
         }
     }
 }

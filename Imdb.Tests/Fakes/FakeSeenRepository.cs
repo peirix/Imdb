@@ -12,17 +12,25 @@ namespace Imdb.Tests.Fakes
 
         public void Add(Seen seen)
         {
-            throw new NotImplementedException();
+            Seen tempSeen = GetSeen(seen.MovieID, seen.UserID);
+            if (tempSeen == null)
+            {
+                SeenMovies.Add(seen.MovieID);
+            }
         }
 
         public void Delete(Seen seen)
         {
-            throw new NotImplementedException();
+            if (SeenMovies.Contains(seen.ID))
+                SeenMovies.Remove(seen.ID);
         }
 
         public Seen GetSeen(int id, string user)
         {
-            throw new NotImplementedException();
+            if (SeenMovies.Contains(id))
+                return new Seen { MovieID = id, UserID = user };
+            else
+                return null;
         }
 
         public IQueryable<int> GetSeenMoviesByUser(string user)
@@ -32,12 +40,13 @@ namespace Imdb.Tests.Fakes
 
         public IQueryable<string> GetUsersWhoHaveSeenMovie(int id)
         {
-            throw new NotImplementedException();
+            List<string> seenBy = new List<string> { "user1", "user2" };
+            return seenBy.AsQueryable();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            //do nothing..?
         }
     }
 }

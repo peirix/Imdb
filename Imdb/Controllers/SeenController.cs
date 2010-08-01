@@ -9,7 +9,17 @@ namespace Imdb.Controllers
 {
     public class SeenController : Controller
     {
-        SeenRepository seenRepository = new SeenRepository();
+        ISeenRepository _seenRepository;
+
+        public SeenController()
+        {
+            _seenRepository = new SeenRepository();
+        }
+
+        public SeenController(ISeenRepository seenRepository)
+        {
+            _seenRepository = seenRepository;
+        }
 
         //
         // AJAX: /Seen/SeenMovie/1
@@ -20,8 +30,8 @@ namespace Imdb.Controllers
             seen.MovieID = id;
             seen.UserID = User.Identity.Name;
 
-            seenRepository.Add(seen);
-            seenRepository.Save();
+            _seenRepository.Add(seen);
+            _seenRepository.Save();
 
             BadgeRepository badgeRepository = new BadgeRepository();
             badgeRepository.CheckForBadges(User.Identity.Name);
@@ -32,10 +42,10 @@ namespace Imdb.Controllers
         [Authorize, AcceptVerbs(HttpVerbs.Post)]
         public ActionResult UnSeenMovie(int id)
         {
-            Seen seen = seenRepository.GetSeen(id, User.Identity.Name);
+            Seen seen = _seenRepository.GetSeen(id, User.Identity.Name);
 
-            seenRepository.Delete(seen);
-            seenRepository.Save();
+            _seenRepository.Delete(seen);
+            _seenRepository.Save();
 
             return Content("Glad you're honest!");
         }
