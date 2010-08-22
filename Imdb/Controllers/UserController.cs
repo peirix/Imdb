@@ -39,15 +39,21 @@ namespace Imdb.Controllers
             string username = user ?? User.Identity.Name;
             List<Movie> movies = _movieRepository.GetMoviesByUser(username).ToList();
             List<Badge> badges = _badgeRepository.GetUserBadges(username).ToList();
-
+            
+            //TODO: Look into MovieList builder
+            /*
             var viewmodel = new UserIndexViewModel
             {
-                Movies = movies,
+                MovieList = new MovieList
+                                {
+                                    Movies = movies,
+                                    SeenMovies = movies.Select(m => m.ID).ToList()
+                                },
                 Badges = badges,
                 Username = username
-            };
+            };*/
 
-            return View(viewmodel);
+            return View();//viewmodel);
         }
 
         [Authorize]

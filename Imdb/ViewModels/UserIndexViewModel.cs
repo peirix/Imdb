@@ -9,7 +9,7 @@ namespace Imdb.ViewModels
     public class UserIndexViewModel
     {
         public List<Badge> Badges { get; set; }
-        public List<Movie> Movies { get; set; }
+        public MovieList MovieList { get; set; }
         public string Username { get; set; }
     }
 }
