@@ -37,11 +37,27 @@ namespace Imdb.Models
                    select log.Rank;
         }
 
+        public int GetPreviousMovieRank(int id)
+        {
+            var l = from log in db.MovieLogs
+                   where log.MovieID == id
+                   orderby log.LoggedDate descending
+                   select log;
+            if (l.Count() < 1)
+                return 0; //movies first week on list
+            return l.First().Rank;
+        }
+
         public IQueryable<Movie> SearchMovie(string query)
         {
             return from movie in db.Movies
                    where movie.Name.ToLower().Contains(query.ToLower())
                    select movie;
+        }
+
+        public DateTime LastUpdated()
+        {
+            return db.MovieLogs.OrderByDescending(l => l.LoggedDate).First().LoggedDate;
         }
 
         //Insert/delete
@@ -67,5 +83,7 @@ namespace Imdb.Models
         {
             db.SubmitChanges();
         }
+
+
     }
 }

@@ -10,5 +10,7 @@ namespace Imdb.Models
         System.Linq.IQueryable<Movie> GetMoviesByUser(string user);
         void Save();
         System.Linq.IQueryable<Movie> SearchMovie(string query);
+        DateTime LastUpdated();
+        int GetPreviousMovieRank(int id);
     }
 }

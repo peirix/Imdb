@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Imdb.ViewModels.MovieListViewModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<Imdb.ViewModels.MoviesIndexViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     Movies
@@ -9,23 +9,23 @@
     <form method="get" action="/Movies/Search">
         <input name="query" type="text" /><input type="submit" value="search" />
     </form>
-    <%  ViewData["seenMovies"] = Model.SeenMovies;
-        Html.RenderPartial("MovieListing", Model.PaginatedMovies); %>
+    <small>Last updated: <%: Model.LastUpdated %></small>
+    <%  Html.RenderPartial("MovieListing", Model.MovieList); %>
     
-    <% if (Model.PaginatedMovies.HasPrevPage)
+    <% if (Model.MovieList.Movies.HasPrevPage)
        { %>
-          <%= Html.RouteLink("Previous page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex - 1), pageSize = Model.PaginatedMovies.PageSize })%>
+          <%= Html.RouteLink("Previous page", "AllMovies", new { page = (Model.MovieList.Movies.PageIndex - 1), pageSize = Model.MovieList.Movies.PageSize })%>
     <% } %>
 
-    <% if (Model.PaginatedMovies.HasNextPage)
+    <% if (Model.MovieList.Movies.HasNextPage)
        { %>
-          <%= Html.RouteLink("Next page", "AllMovies", new { page = (Model.PaginatedMovies.PageIndex + 1), pageSize = Model.PaginatedMovies.PageSize })%>
+          <%= Html.RouteLink("Next page", "AllMovies", new { page = (Model.MovieList.Movies.PageIndex + 1), pageSize = Model.MovieList.Movies.PageSize })%>
     <% } %>
 
     <select onchange="location.href = '?pageSize=' + this.value">
         <% foreach (var option in Model.PageSizeOptions)
            { %>
-            <option value="<%= option %>" <% if(Model.PaginatedMovies.PageSize == option) { %> selected="selected" <% } %>><%= option %></option>
+            <option value="<%= option %>" <% if(Model.MovieList.Movies.PageSize == option) { %> selected="selected" <% } %>><%= option %></option>
            <% } %>
     </select>
 

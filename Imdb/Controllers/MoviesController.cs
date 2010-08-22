@@ -34,17 +34,28 @@ namespace Imdb.Controllers
 
         public ActionResult Index(int? page, int? pageSize)
         {
-            var viewmodel = new MovieListViewModel();
+            var viewmodel = new MoviesIndexViewModel();
+            viewmodel.MovieList = new MovieList();
 
             var movies = _movieRepository.AllMovies();
             var paginatedMovies = new PaginatedList<Movie>(movies, page ?? 0, pageSize ?? 20);
+            var lastUpdated = _movieRepository.LastUpdated();
             
-            viewmodel.PaginatedMovies = paginatedMovies;
+            viewmodel.MovieList.Movies = paginatedMovies;
+            viewmodel.LastUpdated = lastUpdated;
+
+            Dictionary<int, int> lastMovieRanks = new Dictionary<int,int>();
+            foreach (var movie in movies)
+            {
+                int lastLog = _movieRepository.GetPreviousMovieRank(movie.ID);
+                lastMovieRanks.Add(movie.ID, lastLog);
+            }
+            viewmodel.MovieList.LastMovieRanks = lastMovieRanks;
 
             if (User.Identity.IsAuthenticated)
             {
                 var seenMovies = _seenRepository.GetSeenMoviesByUser(User.Identity.Name).ToList();
-                viewmodel.SeenMovies = seenMovies;
+                viewmodel.MovieList.SeenMovies = seenMovies;
             }            
             
             return View(viewmodel);

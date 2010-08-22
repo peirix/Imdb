@@ -31,10 +31,20 @@ namespace Imdb.Tests.Fakes
             return rankLog.AsQueryable();
         }
 
+        public int GetPreviousMovieRank(int id)
+        {
+            return 5; //totally random.
+        }
+
         public IQueryable<Movie> GetMoviesByUser(string user)
         {
             List<Movie> movies = MovieBuilder.Create(100).WithRatingsBetween(1, 9);
             return movies.AsQueryable();
+        }
+
+        public DateTime LastUpdated()
+        {
+            return DateTime.Parse("2008.08.08");
         }
 
         public void Save()

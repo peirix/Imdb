@@ -34,15 +34,15 @@ namespace Imdb.Tests.Controllers
         [TestMethod]
         public void Displays_20_Movies_On_Load()
         {
-            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+            var viewModel = controller.Index(null, null).GetViewModel<MoviesIndexViewModel>();
 
-            viewModel.PaginatedMovies.Count().ShouldEqual(20);
+            viewModel.MovieList.Movies.Count().ShouldEqual(20);
         }
 
         [TestMethod]
         public void Can_Choose_Paging_Options()
         {
-            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();            
+            var viewModel = controller.Index(null, null).GetViewModel<MoviesIndexViewModel>();            
             viewModel.PageSizeOptions.ShouldContain(new int[] {10, 20, 50, 100, 250});
         }
 
@@ -51,9 +51,9 @@ namespace Imdb.Tests.Controllers
         {
             MockUserAuthentication(true);
             seenRepository.SeenMovies = new List<int> { 1, 2, 3 };            
-            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+            var viewModel = controller.Index(null, null).GetViewModel<MoviesIndexViewModel>();
 
-            viewModel.SeenMovies.ShouldContain(new int[] { 1, 2, 3 });
+            viewModel.MovieList.SeenMovies.ShouldContain(new int[] { 1, 2, 3 });
         }
 
         [TestMethod]
@@ -63,9 +63,9 @@ namespace Imdb.Tests.Controllers
             seenRepository.SeenMovies = new List<int> { 1, 2, 3 };
             seenRepository.Add(new Seen { MovieID = 4 });
 
-            var viewModel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+            var viewModel = controller.Index(null, null).GetViewModel<MoviesIndexViewModel>();
 
-            viewModel.SeenMovies.Count().ShouldEqual(4);
+            viewModel.MovieList.SeenMovies.Count().ShouldEqual(4);
         }
 
         [TestMethod]
@@ -75,9 +75,9 @@ namespace Imdb.Tests.Controllers
             seenRepository.SeenMovies = new List<int> { 1, 2, 3, 4 };
             seenRepository.Delete(new Seen { ID = 4 });
 
-            var viewmodel = controller.Index(null, null).GetViewModel<MovieListViewModel>();
+            var viewmodel = controller.Index(null, null).GetViewModel<MoviesIndexViewModel>();
 
-            viewmodel.SeenMovies.Count().ShouldEqual(3);
+            viewmodel.MovieList.SeenMovies.Count().ShouldEqual(3);
         }
 
         [TestMethod]
@@ -94,6 +94,14 @@ namespace Imdb.Tests.Controllers
             var viewModel = controller.Details(1).GetViewModel<MovieDetailsViewModel>();
             viewModel.SeenBy.Count().ShouldEqual(2);
         }
+
+        [TestMethod]
+        public void Front_Page_Shows_Last_Updated_Date()
+        {
+            var viewmodel = controller.Index(null, null).GetViewModel<MoviesIndexViewModel>();
+            viewmodel.LastUpdated.ShouldEqual(DateTime.Parse("2008.08.08"));
+        }
+
 
 
         private void MockUserAuthentication(bool authenticated)

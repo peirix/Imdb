@@ -363,6 +363,13 @@ ul
     float: left;
 }
 
+#movieList .movieRank
+{
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+}
+
 #movieList a.seenMovie 
 {
     color: #050;
