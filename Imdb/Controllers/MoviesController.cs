@@ -44,14 +44,7 @@ namespace Imdb.Controllers
             viewmodel.MovieList.Movies = paginatedMovies;
             viewmodel.LastUpdated = lastUpdated;
 
-            //TODO: move this to init
-            Dictionary<int, int> lastMovieRanks = new Dictionary<int,int>();
-            foreach (var movie in movies)
-            {
-                int lastLog = _movieRepository.GetPreviousMovieRank(movie.ID);
-                lastMovieRanks.Add(movie.ID, lastLog);
-            }
-            viewmodel.MovieList.LastMovieRanks = lastMovieRanks;
+            viewmodel.MovieList.SetLastMovieRanks(_movieRepository);
 
             if (User.Identity.IsAuthenticated)
             {

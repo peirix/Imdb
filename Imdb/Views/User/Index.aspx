@@ -15,5 +15,5 @@
     <% } %>
 
 
-    <% Html.RenderPartial("MovieListing", Model.Movies); %>
+    <% Html.RenderPartial("MovieListing", Model.MovieList); %>
 </asp:Content>

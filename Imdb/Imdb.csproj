@@ -103,6 +103,7 @@
     <Content Include="App_Data\Imdb_log.ldf">
       <DependentUpon>Imdb.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\html5reset.css" />
     <Content Include="Content\images\same.png" />
     <Content Include="Content\images\down.png" />
     <Content Include="Content\images\new.png" />

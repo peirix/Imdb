@@ -56,7 +56,7 @@ namespace Imdb.Tests.Controllers
         {
             var viewmodel = controller.Index("user").GetViewModel<UserIndexViewModel>();
 
-            viewmodel.Movies.Count().ShouldEqual(100);
+            viewmodel.MovieList.Movies.Count().ShouldEqual(100);
         }
 
         [TestMethod]

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Imdb.Models;
 using Imdb.ViewModels;
 using System.Web.Security;
+using Imdb.Helpers;
 
 namespace Imdb.Controllers
 {
@@ -37,23 +38,24 @@ namespace Imdb.Controllers
         public ActionResult Index(string user)
         {
             string username = user ?? User.Identity.Name;
-            List<Movie> movies = _movieRepository.GetMoviesByUser(username).ToList();
+            var movies = _movieRepository.GetMoviesByUser(username);
+            var paginatedMovies = new PaginatedList<Movie>(movies, 0, 250);
             List<Badge> badges = _badgeRepository.GetUserBadges(username).ToList();
             
-            //TODO: Look into MovieList builder
-            /*
             var viewmodel = new UserIndexViewModel
             {
                 MovieList = new MovieList
                                 {
-                                    Movies = movies,
+                                    Movies = paginatedMovies,
                                     SeenMovies = movies.Select(m => m.ID).ToList()
                                 },
                 Badges = badges,
                 Username = username
-            };*/
+            };
 
-            return View();//viewmodel);
+            viewmodel.MovieList.SetLastMovieRanks(_movieRepository);
+
+            return View(viewmodel);
         }
 
         [Authorize]
